@@ -11,6 +11,7 @@ protobuf = "*"
 datasets = "*"
 soundfile = "*"
 librosa = "*"
+huggingsound = "*"
 
 [dev-packages]
 
