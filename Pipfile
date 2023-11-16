@@ -8,6 +8,9 @@ numpy = "*"
 transformers = "*"
 sentencepiece = "*"
 protobuf = "*"
+datasets = "*"
+soundfile = "*"
+librosa = "*"
 
 [dev-packages]
 
