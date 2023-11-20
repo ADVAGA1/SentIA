@@ -12,6 +12,7 @@ datasets = "*"
 soundfile = "*"
 librosa = "*"
 huggingsound = "*"
+"pyannote.audio" = "*"
 
 [dev-packages]
 
