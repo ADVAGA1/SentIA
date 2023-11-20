@@ -1,9 +1,12 @@
 from transformers import pipeline
 
-whisper = pipeline("automatic-speech-recognition", model="openai/whisper-base", chunk_length_s=30, batch_size=16)
+whisper = pipeline("automatic-speech-recognition",
+                   model="openai/whisper-base", chunk_length_s=30, batch_size=16)
 
 model_path = "cardiffnlp/twitter-xlm-roberta-base-sentiment"
-sentiment = pipeline("sentiment-analysis", model=model_path, tokenizer=model_path)
+sentiment = pipeline("sentiment-analysis",
+                     model=model_path, tokenizer=model_path)
+
 
 def process_audio(filepath: str) -> dict[str, float]:
 
@@ -15,18 +18,24 @@ def process_audio(filepath: str) -> dict[str, float]:
         s = sentiment(chunk["text"])[0]
         s["text"] = chunk["text"]
         sentiments.append(s)
-    
+
     result = {}
 
     sum = 0
 
     for s in sentiments:
         label = s["label"]
-        score = s["score"] if label == 'positive' else -s["score"]
+        score = s["score"]
 
-        print(s["text"],score)
+        if label == 'negative':
+            score = -score
+        if label == 'neutral':
+            score = 0
 
-        if label == 'neutral': score = 0
+        print(s["text"], score)
+
+        if label == 'neutral':
+            score = 0
 
         sum = sum + score
 
@@ -35,10 +44,6 @@ def process_audio(filepath: str) -> dict[str, float]:
 
     return result
 
-    
-
-
-
 
 if __name__ == "__main__":
-    print(process_audio("ejemplo2.opus"))
+    print(process_audio("positive.opus"))
