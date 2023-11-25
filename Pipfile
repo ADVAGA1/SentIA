@@ -12,9 +12,8 @@ datasets = "*"
 soundfile = "*"
 librosa = "*"
 huggingsound = "*"
-torch = "*"
 "pyannote.audio" = "*"
-pytorch-lightning = "*"
+flask = "*"
 
 [dev-packages]
 
