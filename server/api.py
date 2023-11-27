@@ -1,15 +1,24 @@
-from flask import Flask
-import sentia 
+from flask import Flask, request
+from flask_cors import CORS
+import json
+
+import sentia
+import database
 
 app = Flask(__name__)
+CORS(app)
 
-@app.route("/")
+
+@app.route("/api/audio/", methods=['GET'])
 def home():
-    return "<p>Hello world</p>"
+    return database.get_audios()
 
-@app.route("/audio")
-def audio():
-    return sentia.process("ejemplo2.wav")
+
+@app.route("/api/audio/<id>", methods=['GET'])
+def audio(id):
+    return f"audio: {id}"
+    # kreturn sentia.process("ejemplo2.wav")
+
 
 if __name__ == "__main__":
     app.run(debug=True)
