@@ -21,7 +21,8 @@ def home():
 
 @app.route("/api/audio/<id>", methods=['GET'])
 def audio(id):
-    return f"audio: {id}"
+    res = database.get_audio(id)
+    return json.dumps(res)
 
 
 def process_audio(file_path: str, id: int):

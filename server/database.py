@@ -51,7 +51,6 @@ def convert(line):
 def get_audios(con, cur):
     res = cur.execute("SELECT * FROM Audio;")
     audios = res.fetchall()
-    print(audios)
 
     return [convert(audio) for audio in audios]
 

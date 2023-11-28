@@ -6,3 +6,22 @@ export type Audio = {
     audio_file: string
     result: string
 };
+
+export type AudioResult = {
+    general_sentiment: number
+    segments: Segment[]
+};
+
+export type Segment = {
+    speaker: number
+    text: string
+    segment: [number, number],
+    sentiment: {
+        label: string
+        score: number
+    }
+    emotion: {
+        label: string
+        score: number
+    }
+};
