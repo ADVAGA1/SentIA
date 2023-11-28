@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "fc20ebe547de0ed98b7f220a37218d14b590c29013c9bcd7d906b1e88ff5822e"
+            "sha256": "50f5b93ce6e5e373c44c0758f4c3df22316c427e8284e4ca630453b57c633658"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -482,6 +482,14 @@
             "index": "pypi",
             "markers": "python_version >= '3.8'",
             "version": "==3.0.0"
+        },
+        "flask-cors": {
+            "hashes": [
+                "sha256:bc3492bfd6368d27cfe79c7821df5a8a319e1a6d5eab277a3794be19bdc51783",
+                "sha256:f268522fcb2f73e2ecdde1ef45e2fd5c71cc48fe03cffb4b441c6d1b40684eb0"
+            ],
+            "index": "pypi",
+            "version": "==4.0.0"
         },
         "fonttools": {
             "hashes": [
@@ -1608,6 +1616,14 @@
             ],
             "markers": "python_version >= '3.6'",
             "version": "==0.3.2"
+        },
+        "pydub": {
+            "hashes": [
+                "sha256:65617e33033874b59d87db603aa1ed450633288aefead953b30bded59cb599a6",
+                "sha256:980a33ce9949cab2a569606b65674d748ecbca4f0796887fd6f46173a7b0d30f"
+            ],
+            "index": "pypi",
+            "version": "==0.25.1"
         },
         "pygments": {
             "hashes": [

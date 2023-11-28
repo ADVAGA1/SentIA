@@ -15,6 +15,7 @@ huggingsound = "*"
 "pyannote.audio" = "*"
 flask = "*"
 flask-cors = "*"
+pydub = "*"
 
 [dev-packages]
 
