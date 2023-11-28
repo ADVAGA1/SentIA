@@ -30,8 +30,9 @@ diarization = Pipeline.from_pretrained(
     "pyannote/speaker-diarization@2.1", use_auth_token=TOKEN)
 
 
-def process(audio_file: str, num_speakers = 2) -> str:
-    if DEBUG: print(f"Processing file: {audio_file}")
+def process(audio_file: str, num_speakers=2) -> str:
+    if DEBUG:
+        print(f"Processing file: {audio_file}")
     y, sr = librosa.load(audio_file, sr=16000)
 
     # audio_in_memory = {"waveform": torch.Tensor(y), "sample_rate": sr}
@@ -40,7 +41,8 @@ def process(audio_file: str, num_speakers = 2) -> str:
     audio_results = []
 
     for turn, track, speaker in diar.itertracks(yield_label=True):
-        if DEBUG: print(turn, track, speaker)
+        if DEBUG:
+            print(turn, track, speaker)
 
         start = turn.start
         end = turn.end
@@ -66,7 +68,21 @@ def process(audio_file: str, num_speakers = 2) -> str:
 
         audio_results.append(result)
 
-    return json.dumps(audio_results, indent=2)
+    general_sentiment = 0.0
+    for segment in audio_results:
+        if segment["sentiment"]["label"] == "positive":
+            general_sentiment += segment["sentiment"]["score"]
+        elif segment["sentiment"]["label"] == "negative":
+            general_sentiment -= segment["sentiment"]["score"]
+
+    d = {
+        "general_sentiment": general_sentiment,
+        "segments": audio_results
+    }
+
+    if DEBUG: print(f"Finished procesing file: {audio_file}")
+
+    return json.dumps(d, indent=2)
 
 
 if __name__ == "__main__":

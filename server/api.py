@@ -16,8 +16,6 @@ CORS(app)
 @app.route("/api/audio", methods=['GET'])
 def home():
     res = database.get_audios()
-    print(res)
-
     return json.dumps(res)
 
 
@@ -36,12 +34,13 @@ def process_audio(file_path: str, id: int):
 @app.route("/api/audio/upload", methods=['POST'])
 def upload_audio():
     audio_file = request.files["audioFile"]
+    label = request.form["label"]
 
     audio_id = random.randint(0, 1_000_000)
-    file_path = f"tmp/{audio_id}.wav"
+    file_path = f".tmp/{audio_id}.wav"
 
     client_id = 0  # TEMPORAL
-    id = database.insert_audio(audio_file.filename, client_id)
+    id = database.insert_audio(audio_file.filename, label, client_id)
 
     audio = AudioSegment.from_file(audio_file)
     audio.export(file_path, format='wav')

@@ -26,6 +26,7 @@ def setup(con, cur):
     cur.execute("""
     CREATE TABLE IF NOT EXISTS Audio (
         id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+        label TEXT NOT NULL,
         client_id INTEGER NOT NULL,
         state TEXT NOT NULL,
         audio_file TEXT NOT NULL,
@@ -38,10 +39,11 @@ def setup(con, cur):
 def convert(line):
     return {
         "id": line[0],
-        "client_id": line[1],
-        "state": line[2],
-        "audio_file": line[3],
-        "result": line[4]
+        "label": line[1],
+        "client_id": line[2],
+        "state": line[3],
+        "audio_file": line[4],
+        "result": line[5]
     }
 
 
@@ -63,13 +65,13 @@ def get_audio(con, cur, id: int):
 
 
 @database_func
-def insert_audio(con, cur, audio_file: str, client_id: int):
-    data = (client_id, STATE_PENDING, audio_file, "")
+def insert_audio(con, cur, audio_file: str, label: str, client_id: int):
+    data = (label, client_id, STATE_PENDING, audio_file, "")
 
     print(data)
 
     cur.execute(
-        "INSERT INTO Audio (client_id, state, audio_file, result) VALUES (?, ?, ?, ?);", data)
+        "INSERT INTO Audio (label, client_id, state, audio_file, result) VALUES (?, ?, ?, ?, ?);", data)
     con.commit()
 
     last_id = cur.lastrowid
