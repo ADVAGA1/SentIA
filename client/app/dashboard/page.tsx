@@ -4,7 +4,7 @@ import { Audio } from "@/app/types";
 import AudioCard from "./AudioCard";
 import AudioCreate from "@/app/components/UploadAudioComponent";
 import { useEffect, useState } from "react";
-import { Modal, ModalContent, NextUIProvider, useDisclosure } from "@nextui-org/react";
+import { Modal, ModalContent, NextUIProvider, useDisclosure, CircularProgress } from "@nextui-org/react";
 
 export default function Dashboard() {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -43,7 +43,7 @@ export default function Dashboard() {
                                     <p className="pl-6">There are no audios. Uploaded audios will be shown here.</p>}
                             </div>
                         </>)
-                            : (<p>Loading...</p>)
+                            : (<div className="flex justify-center items-center"><CircularProgress size="md" aria-label="Loading.." /></div>)
 
                     }
                 </div>
