@@ -1,9 +1,8 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 
+import Header from './Header';
 import "@/app/globals.css";
-
-const inter = Inter({ subsets: ['latin'] })
+import { NextUIProvider } from '@nextui-org/react';
 
 export const metadata: Metadata = {
   title: 'SentIA',
@@ -17,7 +16,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="m-3 pt-4">{children}</body>
+      <body className="m-3 pt-4">
+        <Header />
+        <div>
+          {children}
+        </div>
+      </body>
     </html>
   )
 }

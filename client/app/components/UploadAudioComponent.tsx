@@ -36,23 +36,21 @@ export default function AudioCreate() {
     }
 
     return (
-        <div className="h-screen w-screen flex justify-center items-center">
-            <div className="bg-white shadow-md rounded px-8 pt-6 pb-8">
-                <form>
-                    <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
-                            Label
-                        </label>
-                        <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Label" onChange={handleLabelChange} />
-                    </div>
-                    <div className='mb-6'>
-                        <input type="file" accept="audio/*" onChange={handleFileChange} />
-                    </div>
-                </form>
-                <button className="bg-green-700 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded" onClick={handleUpload}>
-                    Upload
-                </button>
-            </div>
+        <div className="bg-white shadow-md rounded px-8 pt-6 pb-8">
+            <form>
+                <div className="mb-4">
+                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+                        Label
+                    </label>
+                    <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Label" onChange={handleLabelChange} />
+                </div>
+                <div className='mb-6'>
+                    <input type="file" accept="audio/*" onChange={handleFileChange} />
+                </div>
+            </form>
+            <button className="bg-green-700 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded" onClick={handleUpload}>
+                Upload
+            </button>
         </div>
     )
 }

@@ -11,17 +11,16 @@ function PendingAudioDetail() {
 }
 
 function AudioSegment({ segment }: { segment: Segment }) {
-
-    let sentimentColor = "bg-gray-400";
+    let sentimentColor = "bg-gray-300";
     if (segment.sentiment.label == "positive") {
-        sentimentColor = "bg-green-200";
+        sentimentColor = "bg-green-300";
     } else if (segment.sentiment.label == "negative") {
         sentimentColor = "bg-red-400";
     }
 
     let speakerColor = "";
     if (segment.speaker == 0) {
-        speakerColor = "bg-yellow-400";
+        speakerColor = "bg-orange-300";
     } else if (segment.speaker == 1) {
         speakerColor = "bg-purple-200";
     }
