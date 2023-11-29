@@ -17,7 +17,7 @@ export default function AudioCreate() {
     }
 
     const handleUpload = async () => {
-        if (file == null) return;
+        if (file == null || label == "") return;
 
         const formData = new FormData();
         formData.append('audioFile', file as File);
@@ -28,6 +28,8 @@ export default function AudioCreate() {
                 method: 'POST',
                 body: formData,
             });
+
+            window.location.replace("/dashboard");
         } catch (error) {
             console.error('Error uploading file:', error);
         }
@@ -47,7 +49,6 @@ export default function AudioCreate() {
                         <input type="file" accept="audio/*" onChange={handleFileChange} />
                     </div>
                 </form>
-
                 <button className="bg-green-700 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded" onClick={handleUpload}>
                     Upload
                 </button>

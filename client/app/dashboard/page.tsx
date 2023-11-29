@@ -9,7 +9,12 @@ export default async function Dashboard() {
 
     return (
         <div className="mx-6 mt-6">
-            <p className="pl-6 pb-4 text-2xl font-semibold">Your saved audios</p>
+            <div className="px-6 pb-4 flex flex-row justify-between">
+                <p className="text-2xl font-semibold">Your saved audios</p>
+                <a className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-xl" href={"/audio/upload"}>
+                    Upload
+                </a>
+            </div>
             <div>
                 {audioList.map(element => {
                     return <AudioCard key={element.id} audio={element} />;
