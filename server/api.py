@@ -39,6 +39,10 @@ def upload_audio():
     client_id = request.form["clientID"]
 
     audio_id = random.randint(0, 1_000_000)
+
+    if not os.path.isdir(".tmp"):
+        os.mkdir(".tmp")
+
     file_path = f".tmp/{audio_id}.wav"
 
     id = database.insert_audio(audio_file.filename, label, client_id)
