@@ -1,6 +1,12 @@
+"use client";
+
 import RoundedLabel from "@/app/components/RoundedLabel";
 import SentimentValue from "@/app/components/SentimentValue";
+import ConfirmationModal from "@/app/components/ConfirmationModal";
 import { Audio, AudioResult, Segment } from "@/app/types";
+import { CircularProgress, Modal, ModalContent, NextUIProvider, useDisclosure } from "@nextui-org/react";
+import { useEffect, useState } from "react";
+
 
 function PendingAudioDetail() {
     return (
@@ -60,24 +66,79 @@ function FinishedAudioDetail(props: { result: AudioResult }) {
     )
 }
 
-export default async function AudioDetail({ params }: { params: { id: number } }) {
-    const res = await fetch(`http://127.0.0.1:5000/api/audio/${params.id}`, { cache: 'no-store' });
-    const audio: Audio = await res.json();
+export default function AudioDetail({ params }: { params: { id: number } }) {
+    const [audio, setAudio] = useState<Audio>();
+    const [result, setResult] = useState<AudioResult>();
 
-    let result: AudioResult = { general_sentiment: 0.0, segments: [] };
-    if (audio.state == "Finished") {
-        result = JSON.parse(audio.result);
+    const [loaded, setLoaded] = useState(false);
+    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+    useEffect(() => {
+        getData();
+    }, []);
+
+    const getData = async () => {
+        const res = await fetch(`http://127.0.0.1:5000/api/audio/${params.id}`, { cache: 'no-store' });
+        const audio: Audio = await res.json();
+
+        let result: AudioResult = { general_sentiment: 0.0, segments: [] };
+        if (audio.state == "Finished") {
+            result = JSON.parse(audio.result);
+        }
+
+        setAudio(audio);
+        setResult(result);
+        setLoaded(true);
+    }
+
+    const deleteAudio = async () => {
+        if (!loaded) return;
+
+        const formData = new FormData();
+        formData.append('id', audio!.id.toString());
+
+        try {
+            await fetch('http://127.0.0.1:5000/api/audio/remove', {
+                method: 'POST',
+                body: formData,
+            });
+
+            window.location.replace("/dashboard");
+        } catch (error) {
+            console.error('Error uploading file:', error);
+        }
     }
 
     return (
-        <div className="px-6">
-            <p className="pb-4 text-2xl font-semibold">{audio.label}</p>
-            <p className="pb-4 text-lg text-gray-800">Client id: {audio.client_id}</p>
-            {
-                audio.state != "Finished"
-                    ? <PendingAudioDetail />
-                    : <FinishedAudioDetail result={result} />
-            }
-        </div>
+        <NextUIProvider>
+            <div className="px-6">
+                {loaded ?
+                    <>
+                        <div className="flex flex-row justify-between">
+                            <p className="pb-4 text-2xl font-semibold">{audio!.label}</p>
+                            {audio!.state == "Finished" &&
+                                <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-3xl" onClick={onOpen}>
+                                    Delete
+                                </button>
+                            }
+                        </div>
+                        <p className="pb-4 text-lg text-gray-800">Client id: {audio!.client_id}</p>
+                        {
+                            audio!.state != "Finished"
+                                ? <PendingAudioDetail />
+                                : <FinishedAudioDetail result={result!} />
+                        }
+                    </>
+
+                    : (<div className="flex justify-center items-center"><CircularProgress size="md" aria-label="Loading.." /></div>)
+                }
+
+                <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+                    <ModalContent>
+                        <ConfirmationModal execute={deleteAudio} title="Audio deletion" text="Are you sure you want to delete this audio?" />
+                    </ModalContent>
+                </Modal>
+            </div>
+        </NextUIProvider>
     )
 }
