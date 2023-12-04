@@ -31,7 +31,9 @@ def process_audio(file_path: str, id: int):
 
     os.remove(file_path)
 
-def remove_audio(id: int):
+@app.route("/api/audio/remove", methods=['POST'])
+def remove_audio():
+    id = request.form["id"]
     database.remove(id)
 
 
