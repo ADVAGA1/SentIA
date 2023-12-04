@@ -36,11 +36,11 @@ def process_audio(file_path: str, id: int):
 def upload_audio():
     audio_file = request.files["audioFile"]
     label = request.form["label"]
+    client_id = request.form["clientID"]
 
     audio_id = random.randint(0, 1_000_000)
     file_path = f".tmp/{audio_id}.wav"
 
-    client_id = 0  # TEMPORAL
     id = database.insert_audio(audio_file.filename, label, client_id)
 
     audio = AudioSegment.from_file(audio_file)

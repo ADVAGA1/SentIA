@@ -13,7 +13,7 @@ export default function Header() {
                 <div className="lg:flex lg:gap-x-12">
                     <a href="/dashboard" className="text-sm font-semibold leading-6 text-gray-900 border-xl rounded-lg p-2 hover:bg-gray-200">Dashboard</a>
                     <a href="/about" className="text-sm font-semibold leading-6 text-gray-900 border-xl rounded-lg p-2 hover:bg-gray-200">About</a>
-                    <a href="/book-call" className="text-sm font-semibold leading-6 text-gray-900 border-xl rounded-lg p-2 hover:bg-gray-200">Book a call</a>
+                    <a href="/contact" className="text-sm font-semibold leading-6 text-gray-900 border-xl rounded-lg p-2 hover:bg-gray-200">Contact</a>
                 </div>
             </nav>
         </header>

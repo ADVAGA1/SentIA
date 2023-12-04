@@ -72,6 +72,7 @@ export default async function AudioDetail({ params }: { params: { id: number } }
     return (
         <div className="px-6">
             <p className="pb-4 text-2xl font-semibold">{audio.label}</p>
+            <p className="pb-4 text-lg text-gray-800">Client id: {audio.client_id}</p>
             {
                 audio.state != "Finished"
                     ? <PendingAudioDetail />

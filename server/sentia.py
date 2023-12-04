@@ -22,8 +22,12 @@ def get_segment(data, start_sec, end_sec, sr):
 # Models
 whisper = pipeline("automatic-speech-recognition",
                    model="openai/whisper-base", chunk_length_s=30, batch_size=16)
+"""
 emotion = pipeline("audio-classification",
                    model="ehcalabres/wav2vec2-lg-xlsr-en-speech-emotion-recognition", chunk_length_s=30, batch_size=16)
+"""
+emotion = pipeline("audio-classification",
+                   model="chin-may/wav2vec2-audio-emotion-classification", chunk_length_s=30, batch_size=16)
 sentiment = pipeline("sentiment-analysis", model="cardiffnlp/twitter-xlm-roberta-base-sentiment",
                      tokenizer="cardiffnlp/twitter-xlm-roberta-base-sentiment")
 diarization = Pipeline.from_pretrained(
