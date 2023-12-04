@@ -35,12 +35,14 @@ def setup(con, cur):
     """)
     con.commit()
 
+
 @database_func
 def remove(con, cur, id: int):
     cur.execute(f"""
     DELETE FROM Audio WHERE id = {id};
     """)
     con.commit()
+
 
 def convert(line):
     return {
@@ -92,7 +94,7 @@ def change_state_of(con, cur, id: int, result: str):
 
 if __name__ == "__main__":
     setup()
-    id = insert_audio("ejemplo2.wav","maricon",33)
+    id = insert_audio("ejemplo2.wav", "maricon", 33)
     print(get_audios())
     remove(id)
     print("removed")

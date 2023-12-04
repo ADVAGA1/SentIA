@@ -84,7 +84,8 @@ def process(audio_file: str, num_speakers=2) -> str:
         "segments": audio_results
     }
 
-    if DEBUG: print(f"Finished procesing file: {audio_file}")
+    if DEBUG:
+        print(f"Finished procesing file: {audio_file}")
 
     return json.dumps(d, indent=2)
 
