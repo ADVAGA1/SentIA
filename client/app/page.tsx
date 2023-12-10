@@ -1,7 +1,9 @@
+"use client";
+
+import { useEffect } from "react";
+
 export default async function Home() {
-    return (
-        <div>
-            <p>hello world</p>
-        </div>
-    )
+    useEffect(() => {
+        window.location.replace("/dashboard");
+    }, []);
 };
