@@ -36,14 +36,6 @@ def setup(con, cur):
     con.commit()
 
 
-@database_func
-def remove(con, cur, id: int):
-    cur.execute(f"""
-    DELETE FROM Audio WHERE id = {id};
-    """)
-    con.commit()
-
-
 def convert(line):
     return {
         "id": line[0],
@@ -86,10 +78,34 @@ def insert_audio(con, cur, audio_file: str, label: str, client_id: int):
 
 
 @database_func
+def remove(con, cur, id: int):
+    cur.execute(f"""
+    DELETE FROM Audio WHERE id = {id};
+    """)
+    con.commit()
+
+
+@database_func
 def change_state_of(con, cur, id: int, result: str):
     cur.execute(
         f"UPDATE Audio SET state=?, result=? WHERE id={id}", (STATE_FINISHED, result))
     con.commit()
+
+
+@database_func
+def search(con, cur, term: str):
+    if (len(term) == 0): return []
+
+    if (term.isdigit()):
+        res = cur.execute(
+            f"SELECT * FROM Audio WHERE (label LIKE '%{term}%') or (client_id={int(term)})")
+    else:
+        res = cur.execute(
+            f"SELECT * FROM Audio WHERE (label LIKE '%{term}%')")
+
+    audios = res.fetchall()
+
+    return [convert(audio) for audio in audios]
 
 
 if __name__ == "__main__":

@@ -63,6 +63,12 @@ def upload_audio():
     return "{}"
 
 
+@app.route("/api/search/<term>", methods=['GET'])
+def search(term: str):
+    res = database.search(term)
+    return json.dumps(res)
+
+
 if __name__ == "__main__":
     database.setup()
     app.run(debug=True)

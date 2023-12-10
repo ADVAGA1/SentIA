@@ -12,6 +12,7 @@ export default function Header() {
                 </div>
                 <div className="lg:flex lg:gap-x-12">
                     <a href="/dashboard" className="text-sm font-semibold leading-6 text-gray-900 border-xl rounded-lg p-2 hover:bg-gray-200">Dashboard</a>
+                    <a href="/search" className="text-sm font-semibold leading-6 text-gray-900 border-xl rounded-lg p-2 hover:bg-gray-200">Search</a>
                     <a href="/about" className="text-sm font-semibold leading-6 text-gray-900 border-xl rounded-lg p-2 hover:bg-gray-200">About</a>
                 </div>
             </nav>
