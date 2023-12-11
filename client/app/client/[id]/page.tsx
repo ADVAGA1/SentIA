@@ -1,7 +1,6 @@
 "use client";
 
 import { Audio, AudioResult } from "@/app/types";
-import { CircularProgress } from "@nextui-org/react";
 import { Chart } from "chart.js";
 import { useEffect, useState } from "react";
 
