@@ -36,7 +36,7 @@ export default function Dashboard() {
                                 </button>
                             </div>
                             <div>
-                                {audioList.map(element => {
+                                {audioList.reverse().map(element => {
                                     return <AudioCard key={element.id} audio={element} />;
                                 })}
                                 {audioList.length == 0 &&
