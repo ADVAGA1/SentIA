@@ -43,7 +43,7 @@ function AudioSegment({ segment }: { segment: Segment }) {
 
                 <div className="flex flex-row space-x-2">
                     <RoundedLabel label={`${segment.emotion.label} - ${(segment.emotion.score * 100).toFixed(3)}%`} color={"bg-blue-200"} />
-                    <RoundedLabel label={`${segment.sentiment.label} - ${segment.sentiment.score.toFixed(3)}%`} color={sentimentColor} />
+                    <RoundedLabel label={`${segment.sentiment.label} - ${(segment.sentiment.score * 100).toFixed(3)}%`} color={sentimentColor} />
                 </div>
             </div>
         </div>
@@ -55,7 +55,7 @@ function FinishedAudioDetail(props: { result: AudioResult }) {
         <>
             <div className="flex flex-row space-x-2 items-center">
                 <p className="text-lg font-semibold">General audio sentiment: </p>
-                <SentimentValue value={props.result.general_sentiment} />
+                <SentimentValue value={props.result.general_sentiment} percentage={false} />
             </div>
             {
                 props.result.segments.map(segment => {
