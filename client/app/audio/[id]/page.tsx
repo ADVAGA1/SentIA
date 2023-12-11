@@ -43,7 +43,7 @@ function AudioSegment({ segment }: { segment: Segment }) {
 
                 <div className="flex flex-row space-x-2">
                     <RoundedLabel label={`${segment.emotion.label} - ${(segment.emotion.score * 100).toFixed(3)}%`} color={"bg-blue-200"} />
-                    <RoundedLabel label={`${segment.sentiment.label} - ${segment.sentiment.score.toFixed(3)}%`} color={sentimentColor} />
+                    <RoundedLabel label={`${segment.sentiment.label} - ${(segment.sentiment.score * 100).toFixed(3)}%`} color={sentimentColor} />
                 </div>
             </div>
         </div>
@@ -55,7 +55,7 @@ function FinishedAudioDetail(props: { result: AudioResult }) {
         <>
             <div className="flex flex-row space-x-2 items-center">
                 <p className="text-lg font-semibold">General audio sentiment: </p>
-                <SentimentValue value={props.result.general_sentiment} />
+                <SentimentValue value={props.result.general_sentiment} percentage={false} />
             </div>
             {
                 props.result.segments.map((segment, idx) => {
@@ -109,6 +109,12 @@ export default function AudioDetail({ params }: { params: { id: number } }) {
         }
     }
 
+    const seeHistory = async () => {
+        if (!loaded) return;
+
+        window.location.replace(`/client/${audio!.client_id}`)
+    }
+
     return (
         <NextUIProvider>
             <div className="px-6">
@@ -116,11 +122,19 @@ export default function AudioDetail({ params }: { params: { id: number } }) {
                     <>
                         <div className="flex flex-row justify-between">
                             <p className="pb-4 text-2xl font-semibold">{audio!.label}</p>
-                            {audio!.state == "Finished" &&
-                                <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-3xl" onClick={onOpen}>
-                                    Delete
-                                </button>
-                            }
+
+                            <div className="flex flex-row justify-end space-x-4">
+                                {audio!.state == "Finished" &&
+                                    <>
+                                        <button className="bg-gray-300 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded-3xl" onClick={seeHistory}>
+                                            View Client History
+                                        </button>
+                                        <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-3xl" onClick={onOpen}>
+                                            Delete
+                                        </button>
+                                    </>
+                                }
+                            </div>
                         </div>
                         <p className="pb-4 text-lg text-gray-800">Client id: {audio!.client_id}</p>
                         {

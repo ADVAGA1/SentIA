@@ -18,7 +18,7 @@ export default function AudioCard({ audio }: { audio: Audio }) {
                     {audio.label}
                 </div>
                 <div className="flex flex-row justify-center">
-                    {audio.state == "Finished" && <SentimentValue value={score} />}
+                    {audio.state == "Finished" && <SentimentValue value={score} percentage={false}/>}
                 </div>
                 <div className="flex flex-row justify-center">
                     {audio.state}
