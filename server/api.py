@@ -69,6 +69,12 @@ def search(term: str):
     return json.dumps(res)
 
 
+@app.route("/api/client/<id>", methods=['GET'])
+def client(id: int):
+    res = database.get_client_audios(id)
+    return json.dumps(res)
+
+
 if __name__ == "__main__":
     database.setup()
     app.run(debug=True)

@@ -58,8 +58,8 @@ function FinishedAudioDetail(props: { result: AudioResult }) {
                 <SentimentValue value={props.result.general_sentiment} />
             </div>
             {
-                props.result.segments.map(segment => {
-                    return <AudioSegment segment={segment} />;
+                props.result.segments.map((segment, idx) => {
+                    return <AudioSegment key={idx} segment={segment} />;
                 })
             }
         </>

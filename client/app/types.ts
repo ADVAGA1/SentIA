@@ -4,7 +4,8 @@ export type Audio = {
     client_id: number
     state: "Pending" | "Finished"
     audio_file: string
-    result: string
+    result: string,
+    date: Date
 };
 
 export type AudioResult = {

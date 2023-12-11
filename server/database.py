@@ -1,6 +1,7 @@
 import sqlite3
 import os
 import json
+import datetime
 
 STATE_PENDING = "Pending"
 STATE_FINISHED = "Finished"
@@ -30,7 +31,8 @@ def setup(con, cur):
         client_id INTEGER NOT NULL,
         state TEXT NOT NULL,
         audio_file TEXT NOT NULL,
-        result TEXT NOT NULL
+        result TEXT NOT NULL,
+        date DATETIME NOT NULL
     );
     """)
     con.commit()
@@ -43,7 +45,8 @@ def convert(line):
         "client_id": line[2],
         "state": line[3],
         "audio_file": line[4],
-        "result": line[5]
+        "result": line[5],
+        "date": line[6],
     }
 
 
@@ -65,12 +68,13 @@ def get_audio(con, cur, id: int):
 
 @database_func
 def insert_audio(con, cur, audio_file: str, label: str, client_id: int):
-    data = (label, client_id, STATE_PENDING, audio_file, "")
+    data = (label, client_id, STATE_PENDING,
+            audio_file, "", datetime.datetime.now())
 
     print(data)
 
     cur.execute(
-        "INSERT INTO Audio (label, client_id, state, audio_file, result) VALUES (?, ?, ?, ?, ?);", data)
+        "INSERT INTO Audio (label, client_id, state, audio_file, result, date) VALUES (?, ?, ?, ?, ?, ?);", data)
     con.commit()
 
     last_id = cur.lastrowid
@@ -94,7 +98,8 @@ def change_state_of(con, cur, id: int, result: str):
 
 @database_func
 def search(con, cur, term: str):
-    if (len(term) == 0): return []
+    if (len(term) == 0):
+        return []
 
     if (term.isdigit()):
         res = cur.execute(
@@ -103,6 +108,14 @@ def search(con, cur, term: str):
         res = cur.execute(
             f"SELECT * FROM Audio WHERE (label LIKE '%{term}%')")
 
+    audios = res.fetchall()
+
+    return [convert(audio) for audio in audios]
+
+
+@database_func
+def get_client_audios(con, cur, id: int):
+    res = cur.execute(f"SELECT * FROM Audio WHERE client_id={id}")
     audios = res.fetchall()
 
     return [convert(audio) for audio in audios]

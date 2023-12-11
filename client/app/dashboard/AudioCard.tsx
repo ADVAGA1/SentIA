@@ -3,9 +3,7 @@
 import { Audio, AudioResult } from "@/app/types";
 import SentimentValue from "../components/SentimentValue";
 
-export default function AudioCard(props: { audio: Audio }) {
-    const audio = props.audio;
-
+export default function AudioCard({ audio }: { audio: Audio }) {
     let score = 0.0;
     if (audio.state == "Finished") {
         const res: AudioResult = JSON.parse(audio.result);
@@ -16,7 +14,7 @@ export default function AudioCard(props: { audio: Audio }) {
         <div className="rounded-xl border-2 p-2 mx-4 p-4 mb-4 bg-gray-200">
             {/* <div className="flex flex-row justify-between mx-4 items-center"> */}
             <div className="grid grid-cols-4 mx-4 items-center">
-                <div className="font-bold  flex flex-row justify-left">
+                <div className="font-bold flex flex-row justify-left">
                     {audio.label}
                 </div>
                 <div className="flex flex-row justify-center">
