@@ -109,6 +109,12 @@ export default function AudioDetail({ params }: { params: { id: number } }) {
         }
     }
 
+    const seeHistory = async () => {
+        if (!loaded) return;
+
+        window.location.replace(`/client/${audio!.client_id}`)
+    }
+
     return (
         <NextUIProvider>
             <div className="px-6">
@@ -116,11 +122,19 @@ export default function AudioDetail({ params }: { params: { id: number } }) {
                     <>
                         <div className="flex flex-row justify-between">
                             <p className="pb-4 text-2xl font-semibold">{audio!.label}</p>
-                            {audio!.state == "Finished" &&
-                                <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-3xl" onClick={onOpen}>
-                                    Delete
-                                </button>
-                            }
+
+                            <div className="flex flex-row justify-end space-x-4">
+                                {audio!.state == "Finished" &&
+                                    <>
+                                        <button className="bg-gray-300 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded-3xl" onClick={seeHistory}>
+                                            View Client History
+                                        </button>
+                                        <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-3xl" onClick={onOpen}>
+                                            Delete
+                                        </button>
+                                    </>
+                                }
+                            </div>
                         </div>
                         <p className="pb-4 text-lg text-gray-800">Client id: {audio!.client_id}</p>
                         {
