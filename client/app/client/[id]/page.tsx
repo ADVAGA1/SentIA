@@ -1,6 +1,6 @@
 "use client";
 
-import SentimentValue from "@/app/components/SentimentValue";
+import SentimentValueOverall from "@/app/components/SentimentValueOverall";
 import { Audio, AudioResult } from "@/app/types";
 import { Chart } from "chart.js";
 import { useEffect, useState } from "react";
@@ -35,7 +35,7 @@ export default function AudioDetail({ params }: { params: { id: number } }) {
 
         let data: number[] = []
         for (const result of results) {
-            data.push(result.general_sentiment);
+            data.push(result.general_sentiment[3]);
         }
 
         const avg = data.reduce((a, b) => a + b) / data.length;
@@ -63,7 +63,7 @@ export default function AudioDetail({ params }: { params: { id: number } }) {
             <p className="pb-4 text-2xl font-semibold">History results of client {params.id}</p>
             <div className="flex flex-row space-x-4 items-center">
                 <p className="text-lg font-semibold">Average client sentiment:</p>
-                <SentimentValue value={averageSentiment} percentage={false} />
+                <SentimentValueOverall value={averageSentiment} />
             </div>
             <div className="w-[1100px] h-screen flex mx-auto mt-8">
                 <div className='border border-gray-400 pt-0 rounded-xl w-full h-fit shadow-xl'>
