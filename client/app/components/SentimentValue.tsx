@@ -1,22 +1,11 @@
 import RoundedLabel from "./RoundedLabel";
 
-export default function SentimentValue({ value, percentage }: { value: number, percentage: boolean}) {
-    let percentageColor = "";
-    if (value > 0.3) {
-        percentageColor = "bg-green-200";
-    } else if (value < 0.3) {
-        percentageColor = "bg-red-400";
-    } else {
-        percentageColor = "bg-gray-400";
-    }
-
-    let percentageSimbol = "";
-    if (percentage){
-        value = 100 * value;
-        percentageSimbol = "%";
-    }
-
+export default function SentimentValue({ valuePositive, valueNeutral, valueNegative }: { valuePositive: number, valueNeutral: number, valueNegative: number}) {
     return (
-        <RoundedLabel label={value.toFixed(3) + percentageSimbol} color={percentageColor} />
+        <>
+        <RoundedLabel label={valuePositive.toFixed(3) + '%'} color={"bg-green-300"} />
+        <RoundedLabel label={valueNeutral.toFixed(3) + '%'} color={"bg-gray-400"} />
+        <RoundedLabel label={valueNegative.toFixed(3) + '%'} color={"bg-red-400"} />
+        </>
     )
 }

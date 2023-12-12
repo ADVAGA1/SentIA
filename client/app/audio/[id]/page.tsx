@@ -55,7 +55,7 @@ function FinishedAudioDetail(props: { result: AudioResult }) {
         <>
             <div className="flex flex-row space-x-2 items-center">
                 <p className="text-lg font-semibold">General audio sentiment: </p>
-                <SentimentValue value={props.result.general_sentiment} percentage={false} />
+                <SentimentValue valuePositive={props.result.general_sentiment[0]} valueNeutral={props.result.general_sentiment[2]}  valueNegative={props.result.general_sentiment[1]}  />
             </div>
             {
                 props.result.segments.map((segment, idx) => {
@@ -81,7 +81,7 @@ export default function AudioDetail({ params }: { params: { id: number } }) {
         const res = await fetch(`http://127.0.0.1:5000/api/audio/${params.id}`, { cache: 'no-store' });
         const audio: Audio = await res.json();
 
-        let result: AudioResult = { general_sentiment: 0.0, segments: [] };
+        let result: AudioResult = { general_sentiment: [0,0,0,0], segments: [] };
         if (audio.state == "Finished") {
             result = JSON.parse(audio.result);
         }

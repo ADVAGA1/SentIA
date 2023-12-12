@@ -9,7 +9,7 @@ export type Audio = {
 };
 
 export type AudioResult = {
-    general_sentiment: number
+    general_sentiment: [number, number, number, number]
     segments: Segment[]
 };
 

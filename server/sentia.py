@@ -33,17 +33,22 @@ sentiment = pipeline("sentiment-analysis", model="cardiffnlp/twitter-xlm-roberta
 diarization = Pipeline.from_pretrained(
     "pyannote/speaker-diarization@2.1", use_auth_token=TOKEN)
 
-def get_score(audio) -> int:
-    score = 0
+def get_score(audio):
+    score = [0,0,0]
+    score_overall = 0
+
     for segment in audio:
         if segment["sentiment"]["label"] == "positive":
-            score += segment["sentiment"]["score"]
+            score[0] += segment["sentiment"]["score"]
+            score_overall += segment["sentiment"]["score"]
         elif segment["sentiment"]["label"] == "negative":
-            score -= segment["sentiment"]["score"]
+            score[1] += segment["sentiment"]["score"]
+            score_overall -= segment["sentiment"]["score"]
         else:
-            if segment["sentiment"]["score"] > 0.65:
-                score += 0.25*segment["sentiment"]["score"]
-    
+            score[2] += segment["sentiment"]["score"]
+
+    score = [(value / sum(score)) * 100 for value in score]
+    score.append(score_overall)
     return score
 
 

@@ -1,10 +1,10 @@
 "use client";
 
 import { Audio, AudioResult } from "@/app/types";
-import SentimentValue from "../components/SentimentValue";
+import SentimentValueOverall from "../components/SentimentValueOverall";
 
 export default function AudioCard({ audio }: { audio: Audio }) {
-    let score = 0.0;
+    let score = [0,0,0];
     if (audio.state == "Finished") {
         const res: AudioResult = JSON.parse(audio.result);
         score = res.general_sentiment
@@ -18,7 +18,7 @@ export default function AudioCard({ audio }: { audio: Audio }) {
                     {audio.label}
                 </div>
                 <div className="flex flex-row justify-center">
-                    {audio.state == "Finished" && <SentimentValue value={score} percentage={false}/>}
+                    {audio.state == "Finished" && <SentimentValueOverall value={score[3]}/>}
                 </div>
                 <div className="flex flex-row justify-center">
                     {audio.state}
