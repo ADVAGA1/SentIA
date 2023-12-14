@@ -19,22 +19,26 @@ def get_segment(data, start_sec, end_sec, sr):
     return np.array(data[int(start):int(round(end))])
 
 
+device = "cuda:0" if torch.cuda.is_available() else "cpu"
+
 # Models
 whisper = pipeline("automatic-speech-recognition",
-                   model="openai/whisper-base", chunk_length_s=30, batch_size=16)
+                   model="openai/whisper-base", chunk_length_s=30, batch_size=16, device=device)
 """
 emotion = pipeline("audio-classification",
                    model="ehcalabres/wav2vec2-lg-xlsr-en-speech-emotion-recognition", chunk_length_s=30, batch_size=16)
 """
 emotion = pipeline("audio-classification",
-                   model="chin-may/wav2vec2-audio-emotion-classification", chunk_length_s=30, batch_size=16)
+                   model="chin-may/wav2vec2-audio-emotion-classification", chunk_length_s=30, batch_size=16, device=device)
 sentiment = pipeline("sentiment-analysis", model="cardiffnlp/twitter-xlm-roberta-base-sentiment",
-                     tokenizer="cardiffnlp/twitter-xlm-roberta-base-sentiment")
+                     tokenizer="cardiffnlp/twitter-xlm-roberta-base-sentiment", device=device)
 diarization = Pipeline.from_pretrained(
     "pyannote/speaker-diarization@2.1", use_auth_token=TOKEN)
+diarization.device = device
+
 
 def get_score(audio):
-    score = [0,0,0]
+    score = [0, 0, 0]
     score_overall = 0
 
     for segment in audio:
@@ -89,7 +93,7 @@ def process(audio_file: str, num_speakers=2) -> str:
         }
 
         audio_results.append(result)
-    
+
     general_sentiment = get_score(audio_results)
 
     d = {
@@ -104,4 +108,4 @@ def process(audio_file: str, num_speakers=2) -> str:
 
 
 if __name__ == "__main__":
-    print(process("ejemplo2.wav"))
+    print(process("audios/ejemplo2.wav"))
