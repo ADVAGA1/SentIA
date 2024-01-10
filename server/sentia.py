@@ -23,7 +23,7 @@ device = "cuda:0" if torch.cuda.is_available() else "cpu"
 
 # Models
 whisper = pipeline("automatic-speech-recognition",
-                   model="openai/whisper-base", chunk_length_s=30, batch_size=16, device=device)
+                   model="openai/whisper-medium", chunk_length_s=30, batch_size=16, device=device)
 """
 emotion = pipeline("audio-classification",
                    model="ehcalabres/wav2vec2-lg-xlsr-en-speech-emotion-recognition", chunk_length_s=30, batch_size=16)
